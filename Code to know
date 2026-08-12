@@ -1,1 +1,22 @@
-
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[8]<=64||ip6[7]<=64' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[6]&0x40=0x40' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[0:2]>1024||udp[0:2]>1024' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[9]=0x11||ip6[6]=0x11' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]=0x14||tcp[13]=0x11' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[4:2]=213' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ether[12:2]=0x8100' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'udp[0:2]=53||udp[2:2]=53||tcp[0:2]=53||tcp[2:2]=53' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[1]>>2=37' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[8]=1&&(ip[9]=1||ip[9]=17)' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13] = 2' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]=0x12' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]=0x14' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[2:2]<1024||udp[2:2]<1024' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[0:2]=80||tcp[2:2]=80' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[0:2]=23||tcp[2:2]=23' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ether[12:2] = 0x0806' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ether[12:4]&0xffff0fff=0x81000001&&ether[16:4]&0xffff0fff=0x8100000a' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[6]&0x80=0x80' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]&32=0&&tcp[18:2]!=0' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]=0&&ip[16:4]=0x0a0a0a0a' | wc -l
+tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[9]=16' | wc -l
