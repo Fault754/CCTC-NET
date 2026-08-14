@@ -28,6 +28,12 @@ for i in {1..254}; do nc -nvzw1 172.16.82.$i 20-23 80 2>&1 & done | grep -E 'suc
 nc -nuzv 172.16.82.106 53 67 68 123 2>&1 | grep -E 'succ|open'                               //UDP Vertical
 nc -nuzv 172.16.82.106 1000-2000 2>&1 | grep -E 'succ|open'                                  //UDP Vertical
 for i in {1..254}; do nc -nuvz 172.16.82.$i 1000-2000 2>&1 & done | grep -E 'succ|open'      //UDP Horizontal 
+NETCAT FILE TRANSFER////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+nc -nlvp 9001                                                               //Established server listening port
+nc -nv 172.16.82.106 9001                                                   //Created client connection to server
+echo "User Name - SecretSquirrel\nPassword - S3cr3tStuff" > file.txt        //Created file on client
+nc -lvp 9001 > newfile.txt                                                  //Server listener will save data to file.txt
+nc 172.16.82.106 9001 < file.txt                                            //Client connection sends data on listening port
 CURL////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 curl http://www.google.com
 curl http://www.google.com:443
@@ -156,7 +162,75 @@ NMAP SCAN TYPES/////////////////////////////////////////////////////////////////
 -PA21-50        //TCP ACK Discovery Ping
 -PU21-50        //UDP Discovery Ping
 -sY             //SCTP INIT Scan
+SCP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-v //verbose mode
+-p //provides estimated time and connection speed
+-P //port - Specifies the port to connect to on the remote host. Note that this option is written with a capital `P`.
+-C //enable compression
+-l //limit bandwidth (counted in bits, ex: 100KB/s (100*8), specify the parameter as 800)
+-r //recursively copy an entire directory
+-3 //copies between two remote hosts are transferred through the localhost.  Without this option the data is copied directly between the two remote hosts.  Note that this option disables the progress meter.
+NETCAT +////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-l    //Listen Mode
+-p    //Source Port
+-u    //UDP Mode
+-4    //IPV4 Only
+-6    //IPV6 Only
+-n    //No DNS Resolution
+-v    //Verbose Mode
+-w    //Timeout in Seconds
+-z    //Zero-I/O Mode
+-e    //Execute Binary
+-c    //Run Shell Command
+-k    //Keep-Alive
+NAMED PIPE//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+mknod             //(General Purpose)
+mknod pipe p      //primarily used to create character block device files or block device files. Creating a pipe (p) is just a secondary feature of this broader tool.
+mkfifo            //(Specialized)
+mkfifo pipe       //This tool is purpose-built for exactly one job: creating named pipes. Because it has a singular focus, its syntax is straightforward and safe.
+----------------------------------------------------------------------------------------------------------EXAMPLE----------------------------------------------------------------------------------------------------------
+LISTENER TO LISTENER
+mknod mypipe -p
+OR
+mkfifo mypipe
+nc -nv 172.16.82.106 1111 < secret.txt                                 //IH LISTENER(Sending)
+nc -nlvp 1111 < mypipe | nc -lvp 3333 > mypipe                         //BH1 RELAY
+nc -nv 192.168.1.1 3333 > newsecret.txt                                //BPH1 LISTENER(Receiving)
+CLIENT TO CLIENT 
+nc -nlvp 1111 < secret.txt                                             //IH CLIENT(Sending)
+nc -nv 10.10.0.40 1111 < mypipe | nc -nv 192.168.1.10 3333 > mypipe    //BH1 RELAY
+nc -nlvp 3333 > newsecret.txt                                          //BPH1 CLIENT(Receiving)
+CLIENT TO LISTENER
+nc -nlvp 1111 < secret.txt                                             //IN CLIENT(Sending)
+nc -nv 10.10.0.40 1111 < mypipe | nc -nlvp 3333 > mypipe               //BH1 RELAY
+nc -nv 192.168.1.1 3333 > newsecret.txt                                //BPH1 LISTENER(Receiving)
+LISTENER TO CLIENT
+nc -nv 172.16.82.106 1111 < secret.txt                                 //IH LISTENER(Sending)
+nc -nlvp 1111 < mypipe | nc -nv 192.168.1.10 3333 > mypipe             //BH1 RELAY
+nc -nlvp 3333 > newsecret.txt                                          //BPH1 CLIENT(Receiving)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+nc -lvp <Listen Port> > <Name of File>
+nc -nlvp <Sender Port> < mypipe | nc -nv <Listener IP> <Listen Port> > mypipe
+nc -nv <Sender IP> <Sender Port> < mypipe | nc -nv <Listener IP> <Listen Port> > mypipe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
