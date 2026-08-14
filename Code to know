@@ -1,3 +1,4 @@
+TCPDUMP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[8]<=64||ip6[7]<=64' | wc -l
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[6]&0x40=0x40' | wc -l
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[0:2]>1024||udp[0:2]>1024' | wc -l
@@ -20,3 +21,41 @@ tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[6]&0x80=0x80' | w
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]&32=0&&tcp[18:2]!=0' | wc -l
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'tcp[13]=0&&ip[16:4]=0x0a0a0a0a' | wc -l
 tcpdump -n -r /home/activity_resources/pcaps/BPFCheck.pcap 'ip[9]=16' | wc -l
+NETCAT////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+nc -nzvw1 172.16.82.106 21-23 80 2>&1 | grep -E 'succ|open'                                  //TCP Vertical
+nc -nzvw1 172.16.82.106 1024-65535 2>&1 | grep -E 'succ|open'                                //TCP Vertical
+for i in {1..254}; do nc -nvzw1 172.16.82.$i 20-23 80 2>&1 & done | grep -E 'succ|open'      //TCP Horizontal
+nc -nuzv 172.16.82.106 53 67 68 123 2>&1 | grep -E 'succ|open'                               //UDP Vertical
+nc -nuzv 172.16.82.106 1000-2000 2>&1 | grep -E 'succ|open'                                  //UDP Vertical
+for i in {1..254}; do nc -nuvz 172.16.82.$i 1000-2000 2>&1 & done | grep -E 'succ|open'      //UDP Horizontal 
+CURL//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+curl http://www.google.com
+curl http://www.google.com:443
+curl http://www.google.com/file.txt
+curl http://www.google.com/file.txt -o output.txt
+curl ftp://172.16.82.106
+curl ftp://172.16.82.106 -u student:password
+curl ftp://172.16.82.106/file.txt
+curl ftp://172.16.82.106/file.txt -o output.txt
+ARP SCAN//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+sudo arp-scan --interface=eth0 --localnet
+sudo arp-scan --interface=eth0 10.1.0.0/24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
