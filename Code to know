@@ -234,6 +234,7 @@ REMOTE PORT FORWARD
 ssh <user>@<remote IP> -R <RHP>:<target IP>:<target port> -NT
 -R: This flag (-R) specifies a remote port forwarding configuration.
 ssh -R <RHP>:<target IP>:<target port> <user>@<remote IP> -NT
+Can Also Be This ^
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ENUMERATION
 wget -r http://<Target IP>(:[port])
@@ -243,13 +244,14 @@ THEN
 proxychains wget -r http://<Loopback/Target IP>(:[port])
 proxychains wget -r ftp://<Loopback/Target IP>
 proxychains nc <Loopback/Target IP> <Target Open Port>
+CLEAR KNOWN_HOSTS
+ssh-keygen -f "/home/student/.ssh/known_hosts" -R "127.0.0.1"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
+CREATE REMOTE HOST FROM SOMTHING THAT ONLY USES TELNET
+@tunnels-training-pineland-insider:~$ ssh net4_student11@10.3.0.10 -R 41100:127.0.0.1:22 -NT
+@blueinternethost:~$ ssh net4_student11@10.49.11.222 -L 41101:127.0.0.1:41100 -NT
+@blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41101 -D 9050 -NT
+<ENUMERATE>
 
 
 
