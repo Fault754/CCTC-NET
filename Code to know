@@ -245,17 +245,19 @@ proxychains wget -r http://<Loopback/Target IP>(:[port])
 proxychains wget -r ftp://<Loopback/Target IP>
 proxychains nc <Loopback/Target IP> <Target Open Port>
 CLEAR KNOWN_HOSTS
-ssh-keygen -f "/home/student/.ssh/known_hosts" -R "127.0.0.1"
+!!!!! ssh-keygen -f "/home/student/.ssh/known_hosts" -R "127.0.0.1" !!!!! IMPORTANT FOR THE DUMB PERSONAL PORTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MAP 1 - TUNNLES TRAINING
 CREATE REMOTE HOST FROM SOMTHING THAT ONLY USES TELNET
 @tunnels-training-pineland-insider:~$ ssh net4_student11@10.3.0.10 -R 41100:127.0.0.1:22 -NT
 @blueinternethost:~$ ssh net4_student11@10.49.11.222 -L 41101:127.0.0.1:41100 -NT
 @blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41101 -D 9050 -NT
 <ENUMERATE>
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MAP 2 - DATA COLLECTION
+@net-ssh-01:~$ ssh student@10.49.210.171 -R 41100:127.0.0.1:22 -NT
+@blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41100 -L 41101:192.168.0.20:3333 -NT
+@blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41100 -L 41102:192.168.0.40:5555 -NT
+@blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41102 -D 9050 -NT
 
 
