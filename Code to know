@@ -293,6 +293,7 @@ AAAAHHHHHH
 @ethan-hunt:~$ ssh net4_student11@10.1.1.28 -R 41102:127.0.0.1:22 -NT
 @blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41100 -L 41103:127.0.0.1:41102 -NT
 @blueinternethost:~$ ssh shrek@127.0.0.1 -p 41103 -L 41104:172.16.1.10:21313 -NT
+@blueinternethost:~$ ssh shrek@127.0.0.1 -p 41104 -L 41105:172.16.1.19:23 -NT
 @blueinternethost:~$ ssh shrek@127.0.0.1 -p 41103 -D 9050 -NT
 
 
