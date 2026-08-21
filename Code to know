@@ -212,10 +212,44 @@ nc -nlvp 3333 > newsecret.txt                                          //BPH1 CL
 nc -lvp <Listen Port> > <Name of File>
 nc -nlvp <Sender Port> < mypipe | nc -nv <Listener IP> <Listen Port> > mypipe
 nc -nv <Sender IP> <Sender Port> < mypipe | nc -nv <Listener IP> <Listen Port> > mypipe
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+IPTABLES////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-t [table]                                              //Can be filter (default), nat, mangle, raw or security
+-A, --append                                            //Append a rule. Rule will be created at the end of the list or below the rule number you specify.
+-I, --insert                                            //Insert a rule. Rule will be created at the top of the list or above the rule number you specify.
+-R, --replace                                           //Replace a rule. The rule number your specify will be replaced with this rule.
+-D, --delete                                            //Delete a rule. The rule number you specify will be deleted.
+-F, --flush                                             //Flush the table of all rules.
+-L, --list                                              //List all rules in the specified table.
+-S, --list-rules                                        //Prints the rules in the specified table.
+-P, --policy                                            //Set the policy for the chain.
+-n, --numeric                                           //IP addresses and port numbers will be printed in numeric format.
+-L --line-numbers                                       //When listing rules, add line numbers to the beginning of each rule, corresponding to that rule's position in the chain.
+[chain]                                                 //Can be PREROUTING, INPUT, FORWARD, OUTPUT, or POSTROUTING
+[rules] Can be:
+-i [iface]                                              //Specifies the input interface
+-o [iface]                                              //Specifies the output interface
+-s [ip.add | network/mask]                              //Specifies the source IP
+-d [ip.add | network/mask]                              //Specifies the destination IP
+-p [tcp | udp | icmp]                                   //Specifies the protocol.
+-p [tcp | udp] --sport [port | port1:port2]             //Specifies the source port(s). Can be one port or one range.
+-p [tcp | udp] --dport [port | port1:port2]             //Specifies the destination port(s). Can be one port or one range.
+-p icmp --icmp-type type# { /code# }                    //Specifies specific icmp types and codes
+-p tcp --tcp-flags SYN,ACK,PSH,RST,FIN,URG,ALL,NONE     //Specifies specific one or more TCP flags to filter on.
+-m                                                      //is used to call functions from iptables extensions:
+-m state --state [state]                                //Enables stateful packet tracking. States can be NEW,ESTABLISHED,RELATED,UNTRACKED,INVALID
+-m conntrack --ctstate [state]                          //Enables stateful packet tracking. States can be NEW,ESTABLISHED,RELATED,UNTRACKED,INVALID
+-m mac --mac-source [mac] | --mac-destination [mac]
+-m multiport -p [tcp | udp]
+--sports [port1,port2,..port15]                         //Specifies the source port(s). Can be one port, one range, or comma delimited.
+--dports [port1,port2,..port15]                         //Specifies the destination port(s). Can be one port, one range, or comma delimited.
+--ports [port1,port2,..port15]                          //Specifies the port(s). Can be one port, one range, or comma delimited. Ports imply source or destination.
 
+-m bpf --bytecode "bytecode"                            //Specify a Berkeley Packet Filter (BPF) bytecode filter as a matching criteria for filtering network packets.
+-m iprange
+--src-range { ip1-ip2 }                                 //Specifies a range of source IPs.
+--dst-range { ip1-ip2 }                                 //Specifies a range of destination IPs.
 
-
+-j [action]                                             //can be ACCEPT, REJECT, or DROP
 
 
 
@@ -282,12 +316,22 @@ TUNNLES TRAINING 3
 @blueinternethost:~$ ssh Professor@127.0.0.1 -p 41104 -D 9050 -NT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 TUNNLES TRAINING 4
-
+@eric:~$ ssh student@10.49.210.171 -R 41100:127.0.0.1:8462 -NT
+@blueinternethost:~$ ssh Eric@127.0.0.1 -p 41100 -L 41101:192.168.100.60:22 -NT
+@blueinternethost:~$ ssh Kenny@127.0.0.1 -p 41101 -L 41102:10.90.50.140:6481 -NT
+@blueinternethost:~$ ssh Kyle@127.0.0.1 -p 41102 -L 41103:172.20.21.5:23 -NT
+@stan:~$ ssh -p 6481 Kyle@172.20.21.4 -R 41104:127.0.0.1:22 -NT
+@blueinternethost:~$ ssh -p 41102 Kyle@127.0.0.1 -L 41105:127.0.0.1:41104 -NT
+@blueinternethost:~$ ssh -p 41105 Stan@127.0.0.1 -D 9050 -NT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 TUNNLES TRAINING 5
 
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 TUNNLES TRAINING 6
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MAP 2 - DATA COLLECTION
