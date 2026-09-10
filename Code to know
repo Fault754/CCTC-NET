@@ -296,10 +296,23 @@ CREATE REMOTE HOST FROM SOMTHING THAT ONLY USES TELNET
 @blueinternethost:~$ ssh net4_student11@127.0.0.1 -p 41101 -D 9050 -NT
 <ENUMERATE>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+TUNNLES TRAINING 1
+@blueinternethost:~ssh Sokka@10.49.176.142 -D 9050 -NT
+@blueinternethost:~ssh Sokka@10.49.176.142 -L 41100:192.168.1.39:22 -NT
+@blueinternethost:~ssh Aang@127.0.0.1 -p 41100 -D 9050 -NT
+@blueinternethost:~ssh Aang@127.0.0.1 -p 41100 -L 41101:10.0.0.50:22 -NT
+@blueinternethost:~ssh Katara@127.0.0.1 -p 41101 -D 9050 -NT
+@blueinternethost:~ssh Katara@127.0.0.1 -p 41101 -L 41102:172.16.1.8:22 -NT
+@blueinternethost:~ssh Toph@127.0.0.1 -p 41102 -D 9050 -NT
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 TUNNLES TRAINING 2
+@blueinternethost:~$ telnet rick ip
 @rick:~$ ssh student@10.49.210.171 -R 41100:127.0.0.1:22 -NT
 @blueinternethost:~ssh Rick@127.0.0.1 -p 41100 -L 41101:10.1.2.18:2222 -NT
+@blueinternethost:~$ ssh Rick@127.0.0.1 -p 41100 -D 9050 -NT
+@blueinternethost:~$ ssh Morty@127.0.0.1 -p 41101 -D 9050 -NT
 @blueinternethost:~ssh Morty@127.0.0.1 -p 41101 -L 41102:172.16.10.121:2323 -NT
+@blueinternethost:~$ ssh Jerry@127.0.0.1 -p 41102 -D 9050 -NT
 @blueinternethost:~$ ssh Jerry@127.0.0.1 -p 41102 -L 41103:192.168.10.69:22 -NT
 @blueinternethost:~$ ssh Beth@127.0.0.1 -p 41103 -D 9050 -NT
 <ENUMERATE>
