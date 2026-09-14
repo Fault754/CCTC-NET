@@ -317,7 +317,7 @@ TUNNLES TRAINING 3
 @blueinternethost:~$ ssh -p 1234 Bender@10.49.223.74 -L 41100:172.17.17.17:23 -NT
 @blueinternethost:~ssh Bender@10.49.223.74 -p 1234 -D 9050 -NT
 @blueinternethost:~$ ssh -p 1234 Bender@10.49.223.74 -L 41100:172.17.17.28:23 -NT
-@philip:~$ ssh Bender@172.17.17.17 -p 1234 -R 41101:127.0.0.1:22 -NT
+@philip:~$ ssh Bender@172.17.17.17 -p 1234 -R 41101:127.0.0.1:4321 -NT
 @blueinternethost:~$ ssh -p 1234 Bender@10.49.223.74 -L 41102:127.0.0.1:41101 -NT
 @blueinternethost:~$ ssh Philip@127.0.0.1 -p 41102 -D 9050 -NT
 @blueinternethost:~$ ssh -p 41102 Philip@127.0.0.1 -L 41103:192.168.30.150:1212 -NT
